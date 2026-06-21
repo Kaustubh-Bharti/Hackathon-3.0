@@ -1,0 +1,11 @@
+{
+  "hostname": "rabbit",
+  "os": "Linux 6.8.0-40-generic",
+  "arch": "x86_64",
+  "cpu": "Intel(R) Core(TM) i5-9300H CPU @ 2.40GHz",
+  "memory": "7 GB",
+  "disk_root": "/dev/nvme0n1p6  148G   20G  120G  15% /",
+  "uptime": " 23:58:09 up 1 min,  1 user,  load average: 0.51, 0.15, 0.05",
+  "timestamp": "2026-06-21T18:28:09Z",
+  "source": "bash-fallback"
+}
