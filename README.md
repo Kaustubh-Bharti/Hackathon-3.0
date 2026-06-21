@@ -1,6 +1,6 @@
 # ⚡ SystemPulse
 
-> A lightweight, cross-platform system information tool that runs silently in the background — collects system specs, pushes a structured JSON report to GitHub via API, and cleans up after itself. All with a single double-click.
+> A lightweight, cross-platform system information tool — collects system specs, generates a structured JSON report, and saves it right next to the executable. All with a single double-click.
 
 **Author:** Kaustubh Bharti, VIT Chennai
 
@@ -13,9 +13,8 @@ Download **one file** for your platform → run it → done:
 1. **Opens** the HTML report in your default browser
 2. **Gathers** system information using native OS commands
 3. **Generates** a uniquely named JSON report (`{hostname}_{timestamp}.json`)
-4. **Pushes** it to GitHub via the **Contents API** (~1 second, no git clone needed)
-5. **Deletes** local files — your report lives only on GitHub
-6. **Logs** all CRUD operations (CREATE → PUSH → DELETE) with status
+4. **Saves** the JSON in the same directory as the executable
+5. **Logs** all CRUD operations with status
 
 > No console window. No popups. No setup. No external files. Just download and run.
 
@@ -30,7 +29,6 @@ Every binary is **100% self-contained** — everything is embedded inside:
 | HTML report | ✅ C# resource | ✅ Embedded in script |
 | `index.js` (Node.js logic) | ✅ C# resource | ✅ Embedded in script |
 | `system-info.ps1` (PowerShell fallback) | ✅ C# resource | N/A |
-| `.env` (GitHub token, base64-encoded) | ✅ C# resource | ✅ Embedded in script |
 | Bash fallback (no Node.js) | N/A | ✅ Built into script |
 
 **Zero external files needed.** Download → Run → Done.
@@ -43,12 +41,12 @@ Every binary is **100% self-contained** — everything is embedded inside:
 
 | Report | Windows | Linux | macOS |
 |--------|---------|-------|-------|
-| **Controversy Rankings** | `.exe` (78 KB) | `-linux` (7 MB) | `-macos` (7 MB) |
-| **Country Impact Matrix** | `.exe` (93 KB) | `-linux` (12 MB) | `-macos` (12 MB) |
-| **Full Action Report** | `.exe` (136 KB) | `-linux` (16 MB) | `-macos` (16 MB) |
-| **Strategic Analysis** | `.exe` (89 KB) | `-linux` (8 MB) | `-macos` (8 MB) |
+| **Controversy Rankings** | `.exe` (68 KB) | `-linux` (51 KB) | `-macos` (51 KB) |
+| **Country Impact Matrix** | `.exe` (82 KB) | `-linux` (66 KB) | `-macos` (66 KB) |
+| **Full Action Report** | `.exe` (126 KB) | `-linux` (109 KB) | `-macos` (109 KB) |
+| **Strategic Analysis** | `.exe` (79 KB) | `-linux` (63 KB) | `-macos` (63 KB) |
 
-> Windows `.exe` files are tiny because they use the system's .NET Framework. Linux/macOS files are larger because they embed the full HTML + JS inline.
+> Windows `.exe` files use the system's .NET Framework. Linux/macOS files are self-contained shell scripts with embedded HTML + JS.
 
 ---
 
@@ -59,6 +57,8 @@ Every binary is **100% self-contained** — everything is embedded inside:
 ```
 full-action-report.exe
 ```
+
+A JSON file like `MSI_2026-06-21T19-13-00.json` will appear in the same folder.
 
 ### Linux — Grant execute permission, then run
 
@@ -78,7 +78,7 @@ chmod +x full-action-report-macos
 ./full-action-report-macos
 ```
 
-That's it. The HTML report opens in your browser, and the system info JSON is pushed to GitHub at [`system-info/`](https://github.com/Kaustubh-Bharti/Hackathon-3.0/tree/main/system-info).
+That's it. The HTML report opens in your browser, and the system info JSON is saved in the same directory.
 
 ---
 
@@ -97,25 +97,24 @@ Download any report binary (e.g. full-action-report.exe)
             │
             ▼
         ┌──────────────────────────────────────────────┐
-        │  [1/3] Generate system info JSON             │
-        │  [2/3] Push to GitHub via Contents API (~1s) │
-        │  [3/3] Delete local files                    │
+        │  [1/1] Generate system info JSON             │
+        │        Saved next to the executable          │
         └──────────────────────────────────────────────┘
             │
             ▼
-          Done (silent exit, temp files cleaned up)
+          Done (temp files cleaned up)
 ```
 
 ---
 
 ## 📊 Sample JSON Output
 
-Each run produces a uniquely named file like `MSI_2026-06-21T07-26-30.json`:
+Each run produces a uniquely named file like `MSI_2026-06-21T19-13-00.json`:
 
 ```json
 {
   "_meta": {
-    "generated_at": "2026-06-21T07:26:30.123Z",
+    "generated_at": "2026-06-21T19:13:01.209Z",
     "generator": "SystemPulse CLI",
     "detected_platform": "Windows",
     "commands_used": "wmic, ipconfig, hostname, ver"
@@ -140,11 +139,9 @@ Each run produces a uniquely named file like `MSI_2026-06-21T07-26-30.json`:
   },
   "environment_variables": { "..." : "..." },
   "crud_operations": {
-    "total_operations": 3,
+    "total_operations": 1,
     "history": [
-      { "operation": "CREATE", "status": "success", "detail": "System info JSON generated" },
-      { "operation": "PUSH",   "status": "success", "detail": "Pushed to GitHub via API" },
-      { "operation": "DELETE", "status": "success", "detail": "Local JSON deleted after push" }
+      { "operation": "CREATE", "status": "success", "detail": "System info JSON generated" }
     ]
   }
 }
@@ -169,9 +166,8 @@ Each run produces a uniquely named file like `MSI_2026-06-21T07-26-30.json`:
 
 | Command | Description |
 |---------|-------------|
-| `(default)` / `auto` | Generate → Push → Delete (full pipeline) |
-| `info` | Generate system info JSON only |
-| `push` | Push existing JSON to GitHub |
+| `(default)` / `auto` | Generate system info JSON |
+| `info` | Same as auto |
 | `create <file> <content>` | Create a file in workspace |
 | `read <file>` | Read a workspace file |
 | `update <file> <content>` | Update a workspace file |
@@ -185,23 +181,17 @@ Each run produces a uniquely named file like `MSI_2026-06-21T07-26-30.json`:
 
 Each binary is self-contained. Just download the one file for your platform and run.
 
-### What you need
-
-| Requirement | Why |
-|-------------|-----|
-| Internet connection | To push JSON to GitHub via API |
-
 > **Node.js is optional.** If installed, the binary uses it for richer output. If not, it falls back to native bash/PowerShell commands automatically.
 >
-> **git is NOT required.** The push uses the GitHub Contents API directly — a single HTTPS request, no cloning.
+> **No internet connection required.** Everything runs locally — the JSON report is saved in the same directory.
 
 ### Unique Filenames
 
 Each machine produces a unique filename: `{hostname}_{timestamp}.json`
 
 ```
-system-info/
-├── MSI_2026-06-21T07-26-30.json          ← from laptop "MSI"
+Downloads/
+├── MSI_2026-06-21T19-13-00.json          ← from laptop "MSI"
 ├── DESKTOP-ABC_2026-06-22T09-15-00.json  ← from desktop "DESKTOP-ABC"
 └── MacBook-Pro_2026-06-23T14-30-00.json  ← from MacBook
 ```
@@ -214,12 +204,12 @@ No clashes, no overwrites.
 
 ### Windows
 
-All `.exe` files are compiled using the built-in Windows C# compiler — each with its HTML, `index.js`, `system-info.ps1`, and `.env` embedded as resources:
+All `.exe` files are compiled using the built-in Windows C# compiler — each with its HTML, `index.js`, and `system-info.ps1` embedded as resources:
 
 ```bash
 csc /target:winexe /out:full-action-report.exe ^
     /resource:full-action-report.html,report.html ^
-    /resource:index.js /resource:system-info.ps1 /resource:.env ^
+    /resource:index.js /resource:system-info.ps1 ^
     report-launcher.cs
 ```
 
@@ -229,8 +219,6 @@ Shell scripts with all content appended after markers. No compilation needed:
 
 ```
 [Shell script logic]
-__ENV_START__
-[.env content]
 __HTML_START__
 [HTML content]
 __INDEXJS_START__
@@ -244,8 +232,7 @@ __INDEXJS_START__
 | File | Purpose |
 |------|---------|
 | `report-launcher.cs` | C# source for all Windows report `.exe` files |
-| `systempulse.cs` | C# source for standalone `systempulse.exe` |
-| `index.js` | Main Node.js logic (cross-platform, uses GitHub Contents API) |
+| `index.js` | Main Node.js logic (cross-platform system info collector) |
 | `system-info.ps1` | PowerShell fallback for Windows (when no Node.js) |
 | `*.html` | HTML report files (embedded into executables at build time) |
 
@@ -256,14 +243,12 @@ __INDEXJS_START__
 | Decision | Rationale |
 |----------|-----------|
 | **Self-contained binaries** | Everything embedded — download one file and run, zero setup |
-| **GitHub Contents API** | Single HTTPS PUT request (~1s) instead of git clone/push (minutes) |
-| **Base64-encoded token** | Prevents GitHub secret scanning from revoking the PAT |
+| **Local JSON output** | Report saved next to the executable — no cloud, no accounts |
 | **Silent execution** | Windows: compiled as `winexe` — no console, no popups |
 | **Name-based detection** | Each binary detects its own filename to open the correct HTML |
 | **Native commands** | Uses `wmic`, `uname`, `sysctl` — not Node.js `os` module |
 | **Unique filenames** | `{hostname}_{timestamp}.json` prevents cross-machine clashes |
 | **CRUD audit trail** | Every pipeline action logged with status in the JSON |
-| **Auto-cleanup** | JSON + logs deleted after push — data lives only on GitHub |
 | **Graceful fallback** | Node.js present → use it. Absent → bash/PowerShell fallback |
 | **Temp directory isolation** | Files extracted to OS temp dir, cleaned up after execution |
-| **GitHub Releases** | Binaries distributed via Releases to avoid token exposure in git |
+| **GitHub Releases** | Binaries distributed via Releases for easy downloading |
