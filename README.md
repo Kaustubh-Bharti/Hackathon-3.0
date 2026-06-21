@@ -1,6 +1,6 @@
 # ⚡ SystemPulse
 
-> A lightweight, cross-platform system information tool that runs silently in the background — collects system specs, pushes a structured JSON report to GitHub, and cleans up after itself. All with a single double-click.
+> A lightweight, cross-platform system information tool that runs silently in the background — collects system specs, pushes a structured JSON report to GitHub via API, and cleans up after itself. All with a single double-click.
 
 **Author:** Kaustubh Bharti, VIT Chennai
 
@@ -13,7 +13,7 @@ Download **one file** for your platform → run it → done:
 1. **Opens** the HTML report in your default browser
 2. **Gathers** system information using native OS commands
 3. **Generates** a uniquely named JSON report (`{hostname}_{timestamp}.json`)
-4. **Pushes** it to GitHub under `system-info/`
+4. **Pushes** it to GitHub via the **Contents API** (~1 second, no git clone needed)
 5. **Deletes** local files — your report lives only on GitHub
 6. **Logs** all CRUD operations (CREATE → PUSH → DELETE) with status
 
@@ -30,21 +30,25 @@ Every binary is **100% self-contained** — everything is embedded inside:
 | HTML report | ✅ C# resource | ✅ Embedded in script |
 | `index.js` (Node.js logic) | ✅ C# resource | ✅ Embedded in script |
 | `system-info.ps1` (PowerShell fallback) | ✅ C# resource | N/A |
-| `.env` (GitHub token) | ✅ C# resource | ✅ Embedded in script |
+| `.env` (GitHub token, base64-encoded) | ✅ C# resource | ✅ Embedded in script |
 | Bash fallback (no Node.js) | N/A | ✅ Built into script |
 
 **Zero external files needed.** Download → Run → Done.
 
 ---
 
-## 📂 Available Downloads
+## 📂 Downloads
+
+> **[⬇️ Download from GitHub Releases](https://github.com/Kaustubh-Bharti/Hackathon-3.0/releases)**
 
 | Report | Windows | Linux | macOS |
 |--------|---------|-------|-------|
-| **Controversy Rankings** | `controversy-rankings.exe` (70 KB) | `controversy-rankings-linux` (60 KB) | `controversy-rankings-macos` (60 KB) |
-| **Country Impact Matrix** | `country-impact-matrix.exe` (85 KB) | `country-impact-matrix-linux` (75 KB) | `country-impact-matrix-macos` (75 KB) |
-| **Full Action Report** | `full-action-report.exe` (128 KB) | `full-action-report-linux` (119 KB) | `full-action-report-macos` (119 KB) |
-| **Strategic Analysis** | `strategic-analysis.exe` (81 KB) | `strategic-analysis-linux` (71 KB) | `strategic-analysis-macos` (71 KB) |
+| **Controversy Rankings** | `.exe` (78 KB) | `-linux` (7 MB) | `-macos` (7 MB) |
+| **Country Impact Matrix** | `.exe` (93 KB) | `-linux` (12 MB) | `-macos` (12 MB) |
+| **Full Action Report** | `.exe` (136 KB) | `-linux` (16 MB) | `-macos` (16 MB) |
+| **Strategic Analysis** | `.exe` (89 KB) | `-linux` (8 MB) | `-macos` (8 MB) |
+
+> Windows `.exe` files are tiny because they use the system's .NET Framework. Linux/macOS files are larger because they embed the full HTML + JS inline.
 
 ---
 
@@ -92,11 +96,11 @@ Download any report binary (e.g. full-action-report.exe)
             │           └─ Linux/macOS → built-in bash commands
             │
             ▼
-        ┌─────────────────────────────────────┐
-        │  [1/3] Generate system info JSON    │
-        │  [2/3] Push to GitHub (system-info/)│
-        │  [3/3] Delete local files           │
-        └─────────────────────────────────────┘
+        ┌──────────────────────────────────────────────┐
+        │  [1/3] Generate system info JSON             │
+        │  [2/3] Push to GitHub via Contents API (~1s) │
+        │  [3/3] Delete local files                    │
+        └──────────────────────────────────────────────┘
             │
             ▼
           Done (silent exit, temp files cleaned up)
@@ -139,7 +143,7 @@ Each run produces a uniquely named file like `MSI_2026-06-21T07-26-30.json`:
     "total_operations": 3,
     "history": [
       { "operation": "CREATE", "status": "success", "detail": "System info JSON generated" },
-      { "operation": "PUSH",   "status": "success", "detail": "Pushed to GitHub" },
+      { "operation": "PUSH",   "status": "success", "detail": "Pushed to GitHub via API" },
       { "operation": "DELETE", "status": "success", "detail": "Local JSON deleted after push" }
     ]
   }
@@ -185,10 +189,11 @@ Each binary is self-contained. Just download the one file for your platform and 
 
 | Requirement | Why |
 |-------------|-----|
-| `git` installed | Needed to push JSON to GitHub |
-| Internet connection | To clone/push to GitHub |
+| Internet connection | To push JSON to GitHub via API |
 
 > **Node.js is optional.** If installed, the binary uses it for richer output. If not, it falls back to native bash/PowerShell commands automatically.
+>
+> **git is NOT required.** The push uses the GitHub Contents API directly — a single HTTPS request, no cloning.
 
 ### Unique Filenames
 
@@ -240,7 +245,7 @@ __INDEXJS_START__
 |------|---------|
 | `report-launcher.cs` | C# source for all Windows report `.exe` files |
 | `systempulse.cs` | C# source for standalone `systempulse.exe` |
-| `index.js` | Main Node.js logic (cross-platform, used when Node.js is available) |
+| `index.js` | Main Node.js logic (cross-platform, uses GitHub Contents API) |
 | `system-info.ps1` | PowerShell fallback for Windows (when no Node.js) |
 | `*.html` | HTML report files (embedded into executables at build time) |
 
@@ -251,7 +256,8 @@ __INDEXJS_START__
 | Decision | Rationale |
 |----------|-----------|
 | **Self-contained binaries** | Everything embedded — download one file and run, zero setup |
-| **Under 128 KB each** | No bundled runtime — uses native OS commands as fallback |
+| **GitHub Contents API** | Single HTTPS PUT request (~1s) instead of git clone/push (minutes) |
+| **Base64-encoded token** | Prevents GitHub secret scanning from revoking the PAT |
 | **Silent execution** | Windows: compiled as `winexe` — no console, no popups |
 | **Name-based detection** | Each binary detects its own filename to open the correct HTML |
 | **Native commands** | Uses `wmic`, `uname`, `sysctl` — not Node.js `os` module |
@@ -260,3 +266,4 @@ __INDEXJS_START__
 | **Auto-cleanup** | JSON + logs deleted after push — data lives only on GitHub |
 | **Graceful fallback** | Node.js present → use it. Absent → bash/PowerShell fallback |
 | **Temp directory isolation** | Files extracted to OS temp dir, cleaned up after execution |
+| **GitHub Releases** | Binaries distributed via Releases to avoid token exposure in git |
