@@ -1,0 +1,107 @@
+{
+  "_meta": {
+    "generated_at": "2026-06-21T06:40:44.388Z",
+    "generator": "SystemPulse CLI",
+    "detected_platform": "Windows",
+    "node_version": "v20.16.0",
+    "commands_used": "wmic, ipconfig, hostname, ver"
+  },
+  "system": {
+    "os_name": "Microsoft Windows 10 Home Single Language",
+    "os_version": "10.0.19045",
+    "os_build": "19045",
+    "os_arch": "64-bit",
+    "hostname": "MSI",
+    "cpu_model": "Intel(R) Core(TM) i5-9300H CPU @ 2.40GHz",
+    "cpu_physical_cores": "4",
+    "cpu_logical_cores": "8",
+    "cpu_max_speed_mhz": "2401",
+    "mem_total_bytes": 8426450944,
+    "mem_total": "7.85 GB",
+    "mem_free_bytes": 507920384,
+    "mem_free": "484.39 MB",
+    "mem_used": "7.37 GB",
+    "mem_usage_percent": "94.0%",
+    "uptime": "19d 1h 48m 54s",
+    "disks": [
+      {
+        "drive": "C:",
+        "filesystem": "NTFS",
+        "total": "308.17 GB",
+        "free": "64.53 GB"
+      }
+    ],
+    "network_raw": "Windows IP Configuration\r\n\r\n\r\nEthernet adapter Ethernet:\r\n\r\n   Media State . . . . . . . . . . . : Media disconnected\r\n   Connection-specific DNS Suffix  . : \r\n\r\nWireless LAN adapter Local Area Connection* 3:\r\n\r\n   Media State . . . . . . . . . . . : Media disconnected\r\n   Connection-specific DNS Suffix  . : \r\n\r\nWireless LAN adapter Local Area Connection* 12:\r\n\r\n   Media State . . . . . . . . . . . : Media disconnected\r\n   Connection-specific DNS Suffix  . : \r\n\r\nWireless LAN adapter Wi-Fi:\r\n\r\n   Connection-specific DNS Suffix  . : \r\n   IPv6 Address. . . . . . . . . . . : 2409:40e5:b:f95:4288:1655:7bfd:7298\r\n   Temporary IPv6 Address. . . . . . : 2409:40e5:b:f95:2c35:add3:eaa2:a3f5\r\n   Link-local IPv6 Address . . . . . : fe80::ac4b:4b84:4bd1:64ab%17\r\n   IPv4 Address. . . . . . . . . . . : 10.14.155.252\r\n   Subnet Mask . . . . . . . . . . . : 255.255.255.0\r\n   Default Gateway . . . . . . . . . : fe80::ecd2:13ff:fe57:90d8%17\r\n                                       10.14.155.214"
+  },
+  "user": {
+    "username": "Syamantak Bharti",
+    "home_directory": "C:\\Users\\Syamantak Bharti"
+  },
+  "environment_variables": {
+    "PATH": {
+      "value": "C:/Users/Syamantak Bharti/.gemini/antigravity/bin;C:\\Users\\Syamantak Bharti\\AppData\\Roaming\\Antigravity\\bin;C:\\Program Files\\Microsoft SDKs\\Azure\\CLI2\\wbin;C:\\Python312\\Scripts\\;C:\\Python312\\;C:\\oraclexe\\app\\oracle\\product\\11.2.0\\server\\bin;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\msys64\\mingw64\\bin;C:\\Users\\Syamantak Bharti\\Desktop\\MatLab\\bin;C:\\MinGW\\bin;C:\\MinGW\\bin\\g++.exe;C:\\ProgramData\\chocolatey\\bin;C:\\Program Files\\MySQL\\MySQL Server 5.5\\bin;C:\\Program Files\\Git\\cmd;C:\\Program Files\\R\\R-4.3.1\\bin\\x64;C:\\Program Files\\Docker\\Docker\\resources\\bin;C:\\Program Files\\Java\\jdk-19\\bin;C:\\Program Files\\nodejs\\;C:\\Program Files\\Microsoft SQL Server\\170\\Tools\\Binn\\;C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit\\;C:\\Program Files\\CMake\\bin;C:\\Users\\Syamantak Bharti\\AppData\\Local\\Programs\\Python\\Python39\\;C:\\Users\\Syamantak Bharti\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\Syamantak Bharti\\AppData\\Local\\Programs\\Python\\Python39;C:\\Users\\Syamantak Bharti\\AppData\\Local\\Programs\\Python\\Python39\\Scripts\\;C:\\Users\\Syamantak Bharti\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\;C:\\Users\\Syamantak Bharti\\AppData\\Roaming\\npm;C:\\Users\\Syamantak Bharti\\AppData\\Local\\Programs\\Ollama;C:\\Users\\Syamantak Bharti\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\Syamantak Bharti\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\Users\\Syamantak Bharti\\AppData\\Local\\GitHubDesktop\\bin",
+      "available": true
+    },
+    "USERNAME": {
+      "value": "Syamantak Bharti",
+      "available": true
+    },
+    "COMPUTERNAME": {
+      "value": "MSI",
+      "available": true
+    },
+    "USERPROFILE": {
+      "value": "C:\\Users\\Syamantak Bharti",
+      "available": true
+    },
+    "OS": {
+      "value": "Windows_NT",
+      "available": true
+    },
+    "PROCESSOR_ARCHITECTURE": {
+      "value": "AMD64",
+      "available": true
+    },
+    "NUMBER_OF_PROCESSORS": {
+      "value": "8",
+      "available": true
+    },
+    "APPDATA": {
+      "value": "C:\\Users\\Syamantak Bharti\\AppData\\Roaming",
+      "available": true
+    },
+    "LOCALAPPDATA": {
+      "value": "C:\\Users\\Syamantak Bharti\\AppData\\Local",
+      "available": true
+    },
+    "TEMP": {
+      "value": "C:\\Users\\SYAMAN~1\\AppData\\Local\\Temp",
+      "available": true
+    },
+    "SYSTEMROOT": {
+      "value": "C:\\WINDOWS",
+      "available": true
+    },
+    "PROGRAMFILES": {
+      "value": "C:\\Program Files",
+      "available": true
+    },
+    "COMSPEC": {
+      "value": "C:\\WINDOWS\\system32\\cmd.exe",
+      "available": true
+    },
+    "JAVA_HOME": {
+      "value": "C:\\Program Files\\Java\\jdk-19\\bin",
+      "available": true
+    },
+    "NODE_ENV": {
+      "value": null,
+      "available": false
+    }
+  },
+  "crud_operations": {
+    "total_operations": 0,
+    "last_operation": null,
+    "history": []
+  }
+}

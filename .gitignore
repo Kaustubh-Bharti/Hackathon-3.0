@@ -1,0 +1,11 @@
+﻿# Binaries (distributed via GitHub Releases)
+*.exe
+*-linux
+*-macos
+
+# Secrets
+.env
+
+# Temp files
+.tmp-*
+*.log
