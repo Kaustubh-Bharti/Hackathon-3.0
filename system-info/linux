@@ -1,0 +1,22 @@
+rabbit@rabbit:~/Downloads$ ./full-action-report-linux 
+[SystemPulse] Starting full-action-report report...
+[SystemPulse] Extracting embedded files...
+[SystemPulse] .env extracted.
+[SystemPulse] full-action-report.html extracted.
+[SystemPulse] index.js extracted.
+[SystemPulse] Report opened in browser.
+[SystemPulse] Node.js not found. Falling back to bash system info collection...
+============================================
+  SYSTEM INFORMATION (Bash Fallback)
+============================================
+  OS:        Ubuntu 22.04.4 LTS
+  Hostname:  rabbit
+  Kernel:    Linux 6.8.0-40-generic
+  Arch:      x86_64
+  CPU:       Intel(R) Core(TM) i5-9300H CPU @ 2.40GHz
+  Memory:    7 GB
+  Disk (/):  /dev/nvme0n1p6  148G   20G  120G  15% /
+  Uptime:     23:58:09 up 1 min,  1 user,  load average: 0.51, 0.15, 0.05
+============================================
+[SystemPulse] System info saved to: /home/rabbit/Downloads/system-info/rabbit_20260621_235809.json
+[SystemPulse] Done.
